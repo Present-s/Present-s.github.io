@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例详情 - 教学案例库</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a73e8, #6c8ef5);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .case-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .case-header {
+            background: linear-gradient(135deg, #1a73e8, #6c8ef5);
+            color: white;
+            padding: 2rem;
+        }
+
+        .case-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-number {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .case-body {
+            padding: 2rem;
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #1a73e8;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e7ff;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            color: #333;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #1a73e8;
+        }
+
+        .download-section {
+            background: #e8f0fe;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .download-title {
+            font-size: 1.5rem;
+            color: #1a73e8;
+            margin-bottom: 1rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1a73e8;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #0d62d9;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .case-title {
+                font-size: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="../homepage.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    返回案例列表
+                </a>
+                <div class="logo">教学案例库</div>
+                <div></div> <!-- 占位元素 -->
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="case-content">
+                <div class="case-header">
+                    <h1 class="case-title">美国 Emory 成人班同音字教学案例研究</h1>
+                    <div class="case-number">案例编号: 05</div>
+                </div>
+
+                <div class="case-body">
+                    <!-- 学习者信息 -->
+                    <div class="info-section">
+                        <h2 class="section-title">学习者信息</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">是否华裔</div>
+                                <div class="info-value">非华裔学习者</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">学习者类型</div>
+                                <div class="info-value">成人（18-59岁）</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">国籍</div>
+                                <div class="info-value">美国</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">学习者主要语言</div>
+                                <div class="info-value">英语</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">中文水平</div>
+                                <div class="info-value">初级（HSK1-2或等同）</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">学历</div>
+                                <div class="info-value">信息不详</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">专业</div>
+                                <div class="info-value">信息不详</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 专业发展阶段 -->
+                    <div class="info-section">
+                        <h2 class="section-title">专业发展阶段</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">主体类型</div>
+                                <div class="info-value">信息不详</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">客体类型</div>
+                                <div class="info-value">标准化教材（非华裔适用）</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">环境类型 - 教学场域</div>
+                                <div class="info-value">海外本土学校（纳入国外主流教育体系，提供中文课程的学校）</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">环境类型 - 教学形式</div>
+                                <div class="info-value">实体课堂：教学完全在线下教室进行</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">环境类型 - 物理与技术条件</div>
+                                <div class="info-value">未提供</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">过程类型</div>
+                                <div class="info-value">未明确提及</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 案例类型划分 -->
+                    <div class="info-section">
+                        <h2 class="section-title">案例类型划分</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">语言要素教学案例</div>
+                                <div class="info-value">汉字教学案例</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">语言技能教学案例</div>
+                                <div class="info-value">非此类案例</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">文化教学案例</div>
+                                <div class="info-value">非此类案例</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">专用中文教学案例</div>
+                                <div class="info-value">非此类案例</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">课堂管理类案例</div>
+                                <div class="info-value">非此类案例</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">技术辅助教学类案例</div>
+                                <div class="info-value">非此类案例</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">活动设计类案例</div>
+                                <div class="info-value">教授同音不同形字的策略：词语搭配、通过词源和偏旁来解释不同、分析不同的语素；教授同形同音不同意字的策略：分析联系的方法，如“一把
+把住把手”中几个“把”的联系</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">测试与评估类案例</div>
+                                <div class="info-value">未提供</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">跨文化交际类案例</div>
+                                <div class="info-value">未提供</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 案例用途 -->
+                    <div class="info-section">
+                        <h2 class="section-title">案例用途</h2>
+                        <div class="info-item">
+                            <div class="info-label">案例目的界定</div>
+                            <div class="info-value">示范/最佳实践型案例（展示成功的教学经验和方法）</div>
+                        </div>
+                    </div>
+
+                    <!-- 下载区域 -->
+                    <div class="download-section">
+                        <h3 class="download-title">案例资源下载</h3>
+                        <p>点击下方按钮下载本案例的完整资源包（包含教学材料、课件、视频等）</p>
+                        <a href="../res/5.pdf" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            下载案例资源包 (ZIP文件)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>教学案例库 &copy; 2023 - 优质教育资源分享平台</p>
+        </div>
+    </footer>
+</body>
+</html>
