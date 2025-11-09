@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教学案例库 - 教学案例分析</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a73e8, #6c8ef5);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .search-box {
+            display: flex;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-box button {
+            background: #0d62d9;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        .section-title {
+            margin-bottom: 1.5rem;
+            color: #1a73e8;
+            border-bottom: 2px solid #e0e7ff;
+            padding-bottom: 0.5rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            position: relative;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #1a73e8;
+            color: white;
+            border-color: #1a73e8;
+        }
+        
+        .filter-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            max-height: 300px;
+            overflow-y: auto;
+            width: 200px;
+            display: none;
+        }
+        
+        .filter-dropdown.active {
+            display: block;
+        }
+        
+        .filter-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        
+        .filter-option:hover {
+            background: #f5f9ff;
+        }
+        
+        .filter-option:last-child {
+            border-bottom: none;
+        }
+        
+        .cases-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .case-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .case-item:last-child {
+            border-bottom: none;
+        }
+        
+        .case-item:hover {
+            background: #f5f9ff;
+        }
+        
+        .case-number {
+            font-weight: bold;
+            color: #1a73e8;
+            min-width: 40px;
+        }
+        
+        .case-info {
+            flex: 1;
+        }
+        
+        .case-name {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .case-tags {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .case-link {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+        
+        .case-link:hover {
+            background: #e8f0fe;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 5px;
+        }
+        
+        .page-btn {
+            padding: 8px 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .page-btn.active {
+            background: #1a73e8;
+            color: white;
+            border-color: #1a73e8;
+        }
+        
+        .results-info {
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .active-filter {
+            display: inline-block;
+            background: #e8f0fe;
+            color: #1a73e8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            .case-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .case-link {
+                margin-left: 0;
+                align-self: flex-end;
+            }
+            
+            .filter-dropdown {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">国际中文教学案例资源库</div>
+                <div class="search-box">
+                    <input type="text" placeholder="搜索案例名称、国家、课程类型...">
+                    <button>搜索</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <h2 class="section-title">教学案例分析</h2>
+            
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">全部案例</button>
+                <button class="filter-btn" data-filter="country">按国家筛选</button>
+                <button class="filter-btn" data-filter="level">按水平筛选</button>
+                <button class="filter-btn" data-filter="courseType">按课程筛选</button>
+                <button class="filter-btn" data-filter="studentType">按学生筛选</button>
+                
+                <!-- 筛选下拉菜单 -->
+                <div class="filter-dropdown" id="country-dropdown">
+                    <!-- 国家选项将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="filter-dropdown" id="level-dropdown">
+                    <!-- 水平选项将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="filter-dropdown" id="courseType-dropdown">
+                    <!-- 课程选项将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="filter-dropdown" id="studentType-dropdown">
+                    <!-- 学生选项将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <div class="results-info">
+                显示 <span id="current-count">15</span> 个案例，共 71 个
+                <span id="active-filter-display"></span>
+            </div>
+            
+            <div class="cases-list" id="cases-container">
+                <!-- 案例列表将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- 分页按钮将通过JavaScript动态生成 -->
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>国际中文教学案例资源库 &copy; 2025 - 南京大学海外教育学院</p>
+        </div>
+    </footer>
+
+    <script>
+        // 案例数据
+        const cases = [
+            {id: 1, name: "新西兰初中部华裔学生汉语课堂管理案例分析", country: "新西兰", studentType: "初中生", level: "", courseType: "课堂管理"},
+            {id: 2, name: "高级口语课的话题选择", country: "泰国", studentType: "大学生", level: "高级水平", courseType: "口语课"},
+            {id: 3, name: "小学阶段的对外汉语课堂管理案例初探 以新西兰奥克兰地区小学为例", country: "新西兰", studentType: "小学生", level: "", courseType: "课堂管理"},
+            {id: 4, name: "华裔儿童网络教学案例分析", country: "英国", studentType: "小学生", level: "", courseType: "网络教学"},
+            {id: 5, name: "美国 Emory 成人班同音字教学案例研究", country: "美国", studentType: "成人", level: "初级水平", courseType: "同音字教学课"},
+            {id: 6, name: "如何体验中国传统的服饰和娱乐文化", country: "", studentType: "大学生", level: "初级水平", courseType: "文化教学课"},
+            {id: 7, name: "汉语口语课中主题式教学的案例分析", country: "菲律宾", studentType: "青少年", level: "", courseType: "主题式教学"},
+            {id: 8, name: "高级汉语隐喻义文化教学", country: "", studentType: "华裔", level: "高级水平", courseType: "综合课"},
+            {id: 9, name: "汉字教学案例分析", country: "加拿大", studentType: "华裔儿童", level: "", courseType: "汉字"},
+            {id: 10, name: "线上教学的学生沉默问题", country: "香港华裔,法国", studentType: "大学生", level: "中高级水平", courseType: "说写课"},
+            {id: 11, name: "我家有几口人", country: "泰国", studentType: "青少年", level: "初级水平", courseType: "综合课"},
+            {id: 12, name: "高级汉语综合课程线上教学互动效果调查研究", country: "", studentType: "大学生", level: "高级水平", courseType: "综合课"},
+            {id: 13, name: "对外汉语数字词汇教学案例分析", country: "美国", studentType: "小学生", level: "初级水平", courseType: "文化教学"},
+            {id: 14, name: "美国华裔与非华裔学生混合课堂的汉语教学案例分析", country: "美国", studentType: "初中生", level: "", courseType: ""},
+            {id: 15, name: "对外汉语文化班综合课课堂案例分析", country: "", studentType: "大学生", level: "高级水平", courseType: "综合课"},
+            {id: 16, name: "课堂展示环节组织研究 ——以南京大学文化班综合课为例", country: "", studentType: "大学生", level: "高级水平", courseType: "综合课"},
+            {id: 17, name: "本想幽默，结果尴尬", country: "", studentType: "大学生", level: "高级水平", courseType: "文化课"},
+            {id: 18, name: "初下汉语口语课堂教学案例分析 ——以南京大学某海外高校暑期汉语项目为例", country: "美国", studentType: "大学生", level: "初级水平", courseType: "口语课"},
+            {id: 19, name: "初级汉语口语课案例报告", country: "", studentType: "大学生", level: "初级水平", courseType: "口语课"},
+            {id: 20, name: "初级综合汉语课堂操练手段案例分析", country: "", studentType: "大学生", level: "初级水平", courseType: "综合课"},
+            {id: 21, name: "对外汉语教师教学语言使用情况分析——以法国阿尔多瓦孔院初级汉语综合课堂为例", country: "法国", studentType: "大学生", level: "初级水平", courseType: "综合课"},
+            {id: 22, name: "线上课程如何实现精彩互动", country: "", studentType: "大学生", level: "", courseType: "口语课,线上"},
+            {id: 23, name: "东欧学生汉语课堂的问题行为案例分析", country: "东欧", studentType: "大学生", level: "初级水平", courseType: "综合课"},
+            {id: 24, name: "高级汉语综合课教学方法的案例分析", country: "", studentType: "大学生", level: "高级水平", courseType: "综合课"},
+            {id: 25, name: "汉语言专业本科二年级综合课课堂活动案例分析", country: "", studentType: "大学生", level: "中高级水平", courseType: "综合课"},
+            {id: 26, name: "线上商贸汉语课学生交际意愿案例分析", country: "", studentType: "大学生", level: "", courseType: "商贸汉语,线上"},
+            {id: 27, name: "巧用文化作'催化' ——初级汉语口语课中的文化教学", country: "", studentType: "大学生", level: "初级水平", courseType: "口语课,文化教学"},
+            {id: 28, name: "灵活运用教学资源", country: "", studentType: "大学生", level: "初级水平", courseType: "口语课"},
+            {id: 29, name: "口语课型中的线上微辩论案例分析 ——以南京大学为例", country: "", studentType: "大学生", level: "高级水平", courseType: "口语课"},
+            {id: 30, name: "对外汉语高级口语教学情境创设案例分析 ——基于课堂观察及教师访谈", country: "", studentType: "大学生", level: "高级水平", courseType: "口语课"},
+            {id: 31, name: "针对英国华裔青少年汉语学习动机的案例分析", country: "", studentType: "华裔,青少年", level: "中级水平", courseType: ""},
+            {id: 32, name: "初级汉语听说课提问融合词汇教学调查案例分析", country: "", studentType: "大学生", level: "初级水平", courseType: "听说课"},
+            {id: 33, name: "留学生高级辩论口语教学案例分析", country: "", studentType: "大学生", level: "高级水平", courseType: "口语课"},
+            {id: 34, name: "线上中级口语课堂沉默案例分析", country: "", studentType: "大学生", level: "中级水平", courseType: "口语课,线上"},
+            {id: 35, name: "对外汉语高级文化班综合课课堂案例分析 ——以南京大学海外教育学院陈晓燕老师的课堂为例", country: "", studentType: "大学生", level: "高级水平", courseType: "综合课"},
+            {id: 36, name: "韩国留学生离合词教学案例分析", country: "韩国", studentType: "中学生", level: "中级水平", courseType: "词汇课"},
+            {id: 37, name: "针对泰国小学生汉语教学管理问题的案例分析", country: "泰国", studentType: "小学生", level: "中级水平", courseType: "课堂管理课"},
+            {id: 38, name: "疫情背景下跨文化线上汉语教学案例分析", country: "美国", studentType: "成年人", level: "初级水平", courseType: "跨文化交际课"},
+            {id: 39, name: "波兰汉语兴趣班课堂管理案例分析", country: "波兰", studentType: "中学生", level: "初级水平", courseType: "课堂管理课"},
+            {id: 40, name: "课堂偶发事件与应变策略", country: "南非", studentType: "成年人", level: "初级水平", courseType: "课堂管理课"},
+            {id: 41, name: "汉语课堂词汇教学案例分析报告——以'建筑类'词汇为例", country: "英国", studentType: "中学生", level: "初级水平", courseType: "词汇课"},
+            {id: 42, name: "初级汉语口语课程课堂教学活动案例分析", country: "韩国", studentType: "大学生", level: "初级水平", courseType: "口语课"},
+            {id: 43, name: "教学管理案例研究之独特的课堂时间安排", country: "尼泊尔", studentType: "中学生", level: "中级水平", courseType: "课堂管理课"},
+            {id: 44, name: "线上高级听说课互动性不强案例分析", country: "各国", studentType: "成年人", level: "中级水平", courseType: "课堂管理课"},
+            {id: 45, name: "如何对成年人进行声调教学", country: "英国", studentType: "成年人", level: "初级水平", courseType: "语音课"},
+            {id: 46, name: "波兰一小学汉语课堂管理案例分析", country: "波兰", studentType: "小学生", level: "初级水平", courseType: "课堂管理课"},
+            {id: 47, name: "notre dame de bon secours RCA小学拼音教学案例分析", country: "毛里求斯", studentType: "小学生", level: "初级水平", courseType: "语音课"},
+            {id: 48, name: "汉语课堂语法教学案例分析报告", country: "印度", studentType: "大学生", level: "中级水平", courseType: "语法课"},
+            {id: 49, name: "汉语业务学习中的作业难题", country: "意大利", studentType: "成年人", level: "高级水平", courseType: "课堂管理课"},
+            {id: 50, name: "日本汉语课堂教学案例分析", country: "日本", studentType: "大学生", level: "无提及水平", courseType: "课堂管理课"},
+            {id: 51, name: "留学生在汉语课堂活动中参与度较低", country: "各国", studentType: "成年人", level: "中级水平", courseType: "课堂管理课"},
+            {id: 52, name: "疫情背景下肯尼亚现实汉语课堂教学案例分析报告", country: "肯尼亚", studentType: "大学生", level: "中级水平", courseType: "课堂管理课"},
+            {id: 53, name: "利用歌曲对初级水平学习者进行词汇教学的个案调查研究", country: "英国", studentType: "中学生", level: "初级水平", courseType: "词汇课"},
+            {id: 54, name: "来华留学生汉语课堂教学管理案例研究", country: "韩国", studentType: "大学生", level: "高级水平", courseType: "课堂管理课"},
+            {id: 55, name: "英国对外汉语教师跨文化交际案例分析", country: "英国", studentType: "幼儿", level: "初级水平", courseType: "跨文化交际课"},
+            {id: 56, name: "如何管理泰国高中课堂秩序", country: "泰国", studentType: "中学生", level: "中级水平", courseType: "课堂管理课"},
+            {id: 57, name: "保加利亚学生初级阶段课堂管理——兴趣调动案例分析", country: "保加利亚", studentType: "各年龄段", level: "初级水平", courseType: "课堂管理课"},
+            {id: 58, name: "电影在汉语口语课堂中的教学应用与案例分析", country: "美国", studentType: "高中生", level: "初级水平", courseType: "口语课"},
+            {id: 59, name: "国外汉语课中课堂互动环节的案例分析", country: "美国", studentType: "大学生", level: "高级水平", courseType: "课堂管理课"},
+            {id: 60, name: "海外儿童汉语课堂秩序管理案例研究", country: "英国", studentType: "小学生", level: "初级水平", courseType: "课堂管理课"},
+            {id: 61, name: "国外华裔儿童综合课课堂管理案例分析研究", country: "英国", studentType: "小学生", level: "高级水平", courseType: "课堂管理课"},
+            {id: 62, name: "中级汉语课堂多元互动教学中纠错反馈机制的构建", country: "德国", studentType: "大学生", level: "中级水平", courseType: "课堂管理类"},
+            {id: 63, name: "针对不同年龄段汉语学习者的课堂管理分析", country: "英国德国", studentType: "小学生", level: "初级水平", courseType: "课堂管理课"},
+            {id: 64, name: "德国哥廷根大学中级汉语语法课中简体字与繁体字教学问题讨论", country: "德国", studentType: "大学生", level: "中级水平", courseType: "汉字课"},
+            {id: 65, name: "对外汉语初级综合课语法教学案例分析", country: "英国", studentType: "小学生", level: "初级水平", courseType: "语法课"},
+            {id: 66, name: "国际中文教学中新手教师的课堂反馈调查研究", country: "中国", studentType: "大学生", level: "中级水平", courseType: "课堂管理课"},
+            {id: 67, name: "英国华裔儿童中文课操练环节设计的案例分析", country: "英国", studentType: "小学生", level: "高级水平", courseType: "综合课"},
+            {id: 68, name: "国外汉语中级听说课课堂互动特征分析——以德国G大某汉语听说课为例", country: "德国", studentType: "大学生", level: "中级水平", courseType: "课堂管理类"},
+            {id: 69, name: "哥廷根大学汉语生词课构建课堂文化的情况分析——基于LICC观察方法的课堂文化角度", country: "德国", studentType: "大学生", level: "高级水平", courseType: "课题管理课"},
+            {id: 70, name: "初级汉语综合课媒介语使用的案例分析", country: "英国", studentType: "大学生", level: "初级水平", courseType: "课堂管理课"},
+            {id: 71, name: "如果进行有效课堂提问", country: "德国", studentType: "大学生", level: "初级水平", courseType: "课堂管理课"}
+        ];
+
+        // 分页设置
+        const casesPerPage = 15;
+        let currentPage = 1;
+        let filteredCases = [...cases];
+        let activeFilter = { type: null, value: null };
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFilterOptions();
+            renderCases();
+            renderPagination();
+            setupEventListeners();
+        });
+
+        // 渲染筛选选项
+        function renderFilterOptions() {
+            // 获取所有国家（去重）
+            const countries = [...new Set(cases.map(c => c.country).filter(c => c && c.trim() !== ''))].sort();
+            const countryDropdown = document.getElementById('country-dropdown');
+            countryDropdown.innerHTML = '<div class="filter-option" data-value="all">全部国家</div>';
+            countries.forEach(country => {
+                countryDropdown.innerHTML += `<div class="filter-option" data-value="${country}">${country}</div>`;
+            });
+
+            // 获取所有水平（去重）
+            const levels = [...new Set(cases.map(c => c.level).filter(l => l && l.trim() !== ''))].sort();
+            const levelDropdown = document.getElementById('level-dropdown');
+            levelDropdown.innerHTML = '<div class="filter-option" data-value="all">全部水平</div>';
+            levels.forEach(level => {
+                levelDropdown.innerHTML += `<div class="filter-option" data-value="${level}">${level}</div>`;
+            });
+
+            // 获取所有课程类型（去重，处理多值情况）
+            const courseTypes = [];
+            cases.forEach(c => {
+                if (c.courseType && c.courseType.trim() !== '') {
+                    // 处理多值情况，如"口语课,线上"
+                    const types = c.courseType.split(',').map(t => t.trim());
+                    types.forEach(type => {
+                        if (type && !courseTypes.includes(type)) {
+                            courseTypes.push(type);
+                        }
+                    });
+                }
+            });
+            courseTypes.sort();
+            const courseDropdown = document.getElementById('courseType-dropdown');
+            courseDropdown.innerHTML = '<div class="filter-option" data-value="all">全部课程</div>';
+            courseTypes.forEach(courseType => {
+                courseDropdown.innerHTML += `<div class="filter-option" data-value="${courseType}">${courseType}</div>`;
+            });
+
+            // 获取所有学生类型（去重，处理多值情况）
+            const studentTypes = [];
+            cases.forEach(c => {
+                if (c.studentType && c.studentType.trim() !== '') {
+                    // 处理多值情况，如"华裔,青少年"
+                    const types = c.studentType.split(',').map(t => t.trim());
+                    types.forEach(type => {
+                        if (type && !studentTypes.includes(type)) {
+                            studentTypes.push(type);
+                        }
+                    });
+                }
+            });
+            studentTypes.sort();
+            const studentDropdown = document.getElementById('studentType-dropdown');
+            studentDropdown.innerHTML = '<div class="filter-option" data-value="all">全部学生</div>';
+            studentTypes.forEach(studentType => {
+                studentDropdown.innerHTML += `<div class="filter-option" data-value="${studentType}">${studentType}</div>`;
+            });
+        }
+
+        // 渲染案例列表
+        function renderCases() {
+            const container = document.getElementById('cases-container');
+            container.innerHTML = '';
+            
+            const startIndex = (currentPage - 1) * casesPerPage;
+            const endIndex = startIndex + casesPerPage;
+            const casesToShow = filteredCases.slice(startIndex, endIndex);
+            
+            casesToShow.forEach(caseItem => {
+                const caseElement = document.createElement('div');
+                caseElement.className = 'case-item';
+                
+                // 构建标签信息
+                let tags = [];
+                if (caseItem.country) tags.push(`国家: ${caseItem.country}`);
+                if (caseItem.studentType) tags.push(`学生: ${caseItem.studentType}`);
+                if (caseItem.level) tags.push(`水平: ${caseItem.level}`);
+                if (caseItem.courseType) tags.push(`课程: ${caseItem.courseType}`);
+                
+                caseElement.innerHTML = `
+                    <div class="case-number">${caseItem.id.toString().padStart(2, '0')}</div>
+                    <div class="case-info">
+                        <div class="case-name">${caseItem.name}</div>
+                        <div class="case-tags">${tags.join(' | ')}</div>
+                    </div>
+                    <a href="case/case${caseItem.id}.html" class="case-link">查看详情</a>
+                `;
+                
+                container.appendChild(caseElement);
+            });
+            
+            // 更新结果计数
+            document.getElementById('current-count').textContent = casesToShow.length;
+            
+            // 更新活动筛选显示
+            updateActiveFilterDisplay();
+        }
+
+        // 更新活动筛选显示
+        function updateActiveFilterDisplay() {
+            const display = document.getElementById('active-filter-display');
+            if (activeFilter.type && activeFilter.value !== 'all') {
+                display.innerHTML = `<span class="active-filter">${getFilterDisplayName(activeFilter.type)}: ${activeFilter.value}</span>`;
+            } else {
+                display.innerHTML = '';
+            }
+        }
+
+        // 获取筛选类型显示名称
+        function getFilterDisplayName(filterType) {
+            const names = {
+                'country': '国家',
+                'level': '水平',
+                'courseType': '课程',
+                'studentType': '学生'
+            };
+            return names[filterType] || filterType;
+        }
+
+        // 渲染分页
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredCases.length / casesPerPage);
+            const paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = '';
+            
+            // 上一页按钮
+            const prevButton = document.createElement('button');
+            prevButton.className = 'page-btn';
+            prevButton.textContent = '上一页';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderCases();
+                    renderPagination();
+                }
+            });
+            paginationContainer.appendChild(prevButton);
+            
+            // 页码按钮
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageButton.textContent = i;
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    renderCases();
+                    renderPagination();
+                });
+                paginationContainer.appendChild(pageButton);
+            }
+            
+            // 下一页按钮
+            const nextButton = document.createElement('button');
+            nextButton.className = 'page-btn';
+            nextButton.textContent = '下一页';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderCases();
+                    renderPagination();
+                }
+            });
+            paginationContainer.appendChild(nextButton);
+        }
+
+        // 设置事件监听器
+        function setupEventListeners() {
+            const searchInput = document.querySelector('.search-box input');
+            const searchButton = document.querySelector('.search-box button');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // 搜索功能
+            searchInput.addEventListener('input', performSearch);
+            searchButton.addEventListener('click', performSearch);
+            
+            // 筛选按钮点击事件
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // 隐藏所有下拉菜单
+                    document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    
+                    // 移除所有按钮的active类
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // 为当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const filterType = this.getAttribute('data-filter');
+                    
+                    if (filterType === 'all') {
+                        // 显示全部案例
+                        activeFilter = { type: null, value: null };
+                        filteredCases = [...cases];
+                        currentPage = 1;
+                        renderCases();
+                        renderPagination();
+                    } else {
+                        // 显示对应的下拉菜单
+                        const dropdown = document.getElementById(`${filterType}-dropdown`);
+                        if (dropdown) {
+                            dropdown.classList.add('active');
+                        }
+                    }
+                });
+            });
+            
+            // 筛选选项点击事件
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('filter-option')) {
+                    const filterType = e.target.parentElement.id.replace('-dropdown', '');
+                    const filterValue = e.target.getAttribute('data-value');
+                    
+                    // 更新活动筛选
+                    activeFilter = { type: filterType, value: filterValue };
+                    
+                    // 执行筛选
+                    performFilter();
+                    
+                    // 隐藏下拉菜单
+                    document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+            
+            // 点击页面其他地方隐藏下拉菜单
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+        }
+
+        // 执行搜索
+        function performSearch() {
+            const searchTerm = document.querySelector('.search-box input').value.toLowerCase();
+            
+            let results = [...cases];
+            
+            // 应用活动筛选
+            if (activeFilter.type && activeFilter.value !== 'all') {
+                results = results.filter(caseItem => {
+                    // 特殊处理学生类型和课程类型，因为它们可能包含多个值
+                    if (activeFilter.type === 'studentType' || activeFilter.type === 'courseType') {
+                        if (!caseItem[activeFilter.type]) return false;
+                        
+                        // 将多值字段分割成数组并检查是否包含筛选值
+                        const values = caseItem[activeFilter.type].split(',').map(v => v.trim());
+                        return values.includes(activeFilter.value);
+                    } else {
+                        // 其他字段使用普通的包含匹配
+                        return caseItem[activeFilter.type] && 
+                               caseItem[activeFilter.type].toLowerCase().includes(activeFilter.value.toLowerCase());
+                    }
+                });
+            }
+            
+            // 应用搜索
+            if (searchTerm) {
+                results = results.filter(caseItem => {
+                    return caseItem.name.toLowerCase().includes(searchTerm) ||
+                           (caseItem.country && caseItem.country.toLowerCase().includes(searchTerm)) ||
+                           (caseItem.studentType && caseItem.studentType.toLowerCase().includes(searchTerm)) ||
+                           (caseItem.level && caseItem.level.toLowerCase().includes(searchTerm)) ||
+                           (caseItem.courseType && caseItem.courseType.toLowerCase().includes(searchTerm));
+                });
+            }
+            
+            filteredCases = results;
+            currentPage = 1;
+            renderCases();
+            renderPagination();
+        }
+
+        // 执行筛选
+        function performFilter() {
+            let results = [...cases];
+            
+            // 应用活动筛选
+            if (activeFilter.type && activeFilter.value !== 'all') {
+                results = results.filter(caseItem => {
+                    // 特殊处理学生类型和课程类型，因为它们可能包含多个值
+                    if (activeFilter.type === 'studentType' || activeFilter.type === 'courseType') {
+                        if (!caseItem[activeFilter.type]) return false;
+                        
+                        // 将多值字段分割成数组并检查是否包含筛选值
+                        const values = caseItem[activeFilter.type].split(',').map(v => v.trim());
+                        return values.includes(activeFilter.value);
+                    } else {
+                        // 其他字段使用普通的包含匹配
+                        return caseItem[activeFilter.type] && 
+                               caseItem[activeFilter.type].toLowerCase().includes(activeFilter.value.toLowerCase());
+                    }
+                });
+            }
+            
+            // 应用搜索
+            const searchTerm = document.querySelector('.search-box input').value.toLowerCase();
+            if (searchTerm) {
+                results = results.filter(caseItem => {
+                    return caseItem.name.toLowerCase().includes(searchTerm) ||
+                           (caseItem.country && caseItem.country.toLowerCase().includes(searchTerm)) ||
+                           (caseItem.studentType && caseItem.studentType.toLowerCase().includes(searchTerm)) ||
+                           (caseItem.level && caseItem.level.toLowerCase().includes(searchTerm)) ||
+                           (caseItem.courseType && caseItem.courseType.toLowerCase().includes(searchTerm));
+                });
+            }
+            
+            filteredCases = results;
+            currentPage = 1;
+            renderCases();
+            renderPagination();
+        }
+    </script>
+</body>
+</html>
